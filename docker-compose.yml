@@ -21,13 +21,9 @@ services:
     ports:
       - "8069:8069"
     environment:
-      - POSTGRES_USER=odoo_user
-      - POSTGRES_PASSWORD=odoo_password
-      - POSTGRES_DB=odoo_database
-      - PGHOST=postgres
-      - PGUSER=odoo_user
-      - PGPASSWORD=odoo_password
-      - PGDATABASE=odoo_database
+      - HOST=my_postgres
+      - USER=odoo_user
+      - PASSWORD=odoo_password
 
 volumes:
   postgres_data:
