@@ -1,20 +1,33 @@
 version: '3'
+
 services:
+  postgres:
+    image: postgres:latest
+    container_name: my_postgres
+    environment:
+      POSTGRES_USER: odoo_user
+      POSTGRES_PASSWORD: odoo_password
+      POSTGRES_DB: odoo_database
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
   odoo:
     image: odoo:latest
-    env_file: .env
+    container_name: my_odoo
     depends_on:
       - postgres
     ports:
-      - "127.0.0.1:8069:8069"
-    volumes:
-      - data:/var/lib/odoo
-  postgres:
-    image: postgres:latest
-    env_file: .env
-    volumes:
-      - db:/var/lib/postgresql/data/pgdata
+      - "8069:8069"
+    environment:
+      - POSTGRES_USER=odoo_user
+      - POSTGRES_PASSWORD=odoo_password
+      - POSTGRES_DB=odoo_database
+      - PGHOST=postgres
+      - PGUSER=odoo_user
+      - PGPASSWORD=odoo_password
+      - PGDATABASE=odoo_database
 
 volumes:
-  data:
-  db:
+  postgres_data:
